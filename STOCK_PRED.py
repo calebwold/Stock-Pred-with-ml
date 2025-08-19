@@ -21,12 +21,11 @@ import pandas_ta as ta
 import time
 from typing import Optional, Union, Dict, Any
 
-# API Keys - These should be stored securely in production
-# You can set these as environment variables for better security
-HF_TOKEN = os.getenv("HF_TOKEN", "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")
-ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY", "A3IIVDHUICCXX3EG")
-OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY", '161a02f55af96a556113c9c2379c3f69')
-FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY", "d29rr91r01qvhsfut0u0d29rr91r01qvhsfut0ug")
+# Read from Streamlit Secrets Manager
+HF_TOKEN = st.secrets["HF_TOKEN"]
+ALPHA_VANTAGE_API_KEY = st.secrets["ALPHA_VANTAGE_API_KEY"]
+OPENWEATHER_API_KEY = st.secrets["OPENWEATHER_API_KEY"]
+FINNHUB_API_KEY = st.secrets["FINNHUB_API_KEY"]
 
 # Initialize Hugging Face client
 
