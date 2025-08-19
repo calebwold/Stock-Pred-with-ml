@@ -20,6 +20,12 @@ from textblob import TextBlob
 import pandas_ta as ta
 import time
 from typing import Optional, Union, Dict, Any
+import numpy as np
+# shim for pandas-ta on NumPy 2.x
+if not hasattr(np, "NaN"):
+    np.NaN = np.nan
+
+import pandas_ta as ta
 
 # Read from Streamlit Secrets Manager
 HF_TOKEN = st.secrets["HF_TOKEN"]
