@@ -1,135 +1,130 @@
 # StockForecastX Pro - Advanced AI Stock Analysis Platform
 
-A comprehensive stock analysis and forecasting application built with Streamlit, featuring AI-powered insights, technical analysis, fundamental analysis, sentiment analysis, and machine learning predictions.
+A comprehensive stock analysis and forecasting web application built with Flask, featuring AI-powered insights, technical analysis, fundamental analysis, sentiment analysis, and machine learning predictions.
 
-## Features
+## 🚀 Features
 
 ### **Comprehensive Analysis**
-- **Technical Analysis**: RSI, MACD, Bollinger Bands, Moving Averages, and more
+- **Technical Analysis**: RSI, MACD, Bollinger Bands, Moving Averages, OBV, and more
 - **Fundamental Analysis**: P/E ratios, financial health scores, valuation metrics
-- **Sentiment Analysis**: Real-time news sentiment scoring
+- **Sentiment Analysis**: Real-time news sentiment scoring with AI-generated debriefs
 - **Machine Learning**: Random Forest models with performance metrics
-- **AI Insights**: Hugging Face-powered analysis with multiple model options
+- **Prophet Forecasting**: Time series forecasting for price predictions
+- **LLM Price Predictions**: AI-powered conservative price forecasts with detailed reasoning
 
 ### **Key Capabilities**
-- Real-time stock data fetching via Yahoo Finance
+- Real-time stock data fetching via Alpha Vantage and yfinance
 - Advanced technical indicators calculation
 - Prophet time series forecasting
-- News sentiment analysis via Alpha Vantage
-- Weather integration for market context
-- Interactive charts and visualizations
-- Downloadable analysis reports
+- News sentiment analysis via OpenAI
+- Interactive charts and visualizations using Plotly.js
+- Responsive design for mobile and desktop
+- Professional, sleek UI design
 
-## Installation
+## 📋 Prerequisites
 
-### Prerequisites
 - Python 3.8 or higher
 - pip package manager
+- API Keys (see setup instructions below)
 
-### Setup Instructions
+## 🛠️ Installation
 
-1. **Clone or download the project files**
-   ```bash
-   git clone <repository-url>
-   cd Stock_DEV
-   ```
+### 1. Clone the Repository
+```bash
+git clone <your-repository-url>
+cd Stock_DEV
+```
 
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2. Create Virtual Environment
+```bash
+python3 -m venv myenv
+source myenv/bin/activate  # On Windows: myenv\Scripts\activate
+```
 
-3. **Set up API Keys (Optional but Recommended)**
-   
-   Create a `.env` file in the project directory:
-   ```bash
-   # Hugging Face API Token (for AI analysis)
-   HF_TOKEN=your_huggingface_token_here
-   
-   # Alpha Vantage API Key (for news sentiment)
-   ALPHA_VANTAGE_API_KEY=your_alpha_vantage_key_here
-   
-   # OpenWeather API Key (for weather data)
-   OPENWEATHER_API_KEY=your_openweather_key_here
-   
-   # Finnhub API Key (alternative data source)
-   FINNHUB_API_KEY=your_finnhub_key_here
-   ```
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-   **Note**: The application will work without API keys, but some features will be limited.
+### 4. Set Up API Keys
 
-4. **Run the application**
-   ```bash
-   streamlit run PART.PY
-   ```
+Create a `.env` file in the project root directory:
 
-5. **Open your browser**
-   Navigate to `http://localhost:8501`
+```bash
+# Alpha Vantage API Key (for historical stock data and fundamentals)
+# Get your free key at: https://www.alphavantage.co/support/#api-key
+ALPHA_VANTAGE_API_KEY=your_alpha_vantage_api_key_here
 
-## Usage Guide
+# OpenAI API Key (for sentiment analysis and LLM price predictions)
+# Get your key at: https://platform.openai.com/api-keys
+OPENAI_API_KEY=your_openai_api_key_here
 
-### 1. **Basic Analysis**
-- Enter a stock ticker symbol (e.g., AAPL, MSFT, GOOGL)
-- Select your desired timeframe (1 month to 5 years)
-- Choose forecast period (1-60 days)
-- Click "Analyze Stock"
+# OpenWeather API Key (optional, for weather data)
+# Get your free key at: https://openweathermap.org/api
+OPENWEATHER_API_KEY=your_openweather_api_key_here
+```
 
-### 2. **AI Model Selection**
-- Choose from available Hugging Face models:
-  - **GPT-OSS-120B**: Large, powerful model for detailed analysis
-  - **Llama-3.1-8B**: Fast, efficient model
-  - **Mistral-7B**: Balanced performance and speed
-  - **CodeLlama-34B**: Specialized for technical analysis
+**Important**: Never commit your `.env` file to version control. It's already in `.gitignore`.
 
-### 3. **Analysis Tabs**
+### 5. Run the Application
+```bash
+python3 app.py
+```
+
+The server will start on `http://localhost:5004` (or the port specified in `app.py`).
+
+### 6. Open in Browser
+Navigate to `http://localhost:5004` in your web browser.
+
+## 📖 Usage Guide
+
+### Basic Analysis
+1. Enter a stock ticker symbol (e.g., `AAPL`, `MSFT`, `TSLA`, `GOOGL`)
+2. Select your desired timeframe (1 Year, 2 Years, or 5 Years)
+3. Adjust forecast days using the slider (1-60 days)
+4. Click "Analyze Stock"
+5. Wait for analysis to complete (30-60 seconds)
+
+### Analysis Tabs
 
 #### **Dashboard**
 - Overview of current price and forecast
 - Financial health and sentiment gauges
 - Main price chart with forecast
 - Volume analysis
-- AI-generated insights
+- Key metrics at a glance
 
 #### **Technical Analysis**
 - Interactive candlestick charts
 - Technical indicators overlay
-- Oscillator charts (RSI, MACD, Stochastic)
-- Technical signals and pivot points
+- RSI, MACD, Bollinger Bands
 - Support/resistance levels
 
 #### **Fundamental Analysis**
 - Company financial metrics
-- Valuation score breakdown
-- Financial health components
-- Investment checklist
-- Radar charts for metrics
+- Financial health score (0-100)
+- Valuation metrics
+- P/E, PEG, Debt-to-Equity ratios
 
 #### **Sentiment Analysis**
-- News sentiment scoring
-- Recent news articles with sentiment
+- News sentiment scoring (-1 to 1 scale)
+- Recent news articles with AI-generated debriefs
 - Sentiment impact analysis
-- Market mood indicators
+- Publisher information
 
 #### **ML Forecasts**
 - Machine learning model performance
 - Prediction accuracy metrics
 - Detailed price predictions
-- Model confidence levels
+- LLM-based price predictions with reasoning
+- Prophet forecasts
 
 #### **AI Insights**
 - Comprehensive AI analysis
 - Investment recommendations
 - Risk factor assessment
-- Score breakdown by component
 
-## API Keys Setup
-
-### **Hugging Face Token**
-1. Visit [Hugging Face](https://huggingface.co/)
-2. Create an account and log in
-3. Go to Settings → Access Tokens
-4. Create a new token with read permissions
-5. Add to your `.env` file as `HF_TOKEN`
+## 🔑 API Keys Setup
 
 ### **Alpha Vantage API Key**
 1. Visit [Alpha Vantage](https://www.alphavantage.co/)
@@ -137,67 +132,100 @@ A comprehensive stock analysis and forecasting application built with Streamlit,
 3. Get your API key from the dashboard
 4. Add to your `.env` file as `ALPHA_VANTAGE_API_KEY`
 
-### **OpenWeather API Key**
+**Note**: Alpha Vantage is used **only** for historical stock data and fundamental data, not for sentiment analysis.
+
+### **OpenAI API Key**
+1. Visit [OpenAI Platform](https://platform.openai.com/)
+2. Create an account and add billing information
+3. Go to API Keys section
+4. Create a new API key
+5. Add to your `.env` file as `OPENAI_API_KEY`
+
+**Note**: OpenAI is used for sentiment analysis of news articles and LLM-based price predictions.
+
+### **OpenWeather API Key** (Optional)
 1. Visit [OpenWeatherMap](https://openweathermap.org/)
 2. Sign up for a free account
 3. Get your API key
 4. Add to your `.env` file as `OPENWEATHER_API_KEY`
 
-## Features in Detail
+## 🏗️ Project Structure
 
-### **Caching System**
-- Stock data cached for 1 hour
-- Fundamental data cached for 30 minutes
-- Sentiment data cached for 15 minutes
-- Improves performance for repeated analyses
+```
+Stock_DEV/
+├── app.py              # Flask backend application
+├── index.html          # Frontend HTML
+├── styles.css          # CSS styling
+├── script.js           # Frontend JavaScript
+├── requirements.txt    # Python dependencies
+├── .env                # Environment variables (not in git)
+├── .gitignore          # Git ignore rules
+└── README.md           # This file
+```
 
-### **Error Handling**
-- Graceful handling of API failures
-- Fallback analysis when AI models are unavailable
-- Input validation for ticker symbols
-- Progress tracking for long operations
+## 🔒 Security Notes
 
-### **Performance Optimizations**
-- Optimized Prophet model settings
-- Efficient data processing
-- Memory management
-- Responsive UI with progress indicators
+- **Never commit API keys** to version control
+- The `.env` file is automatically ignored by git
+- API keys are loaded from environment variables
+- Use `.env.example` as a template (create your own `.env` file)
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
-### **Common Issues**
+### Common Issues
 
 1. **"No data found for ticker"**
    - Check if the ticker symbol is correct
    - Ensure you have internet connection
-   - Try a different ticker symbol
+   - Verify your Alpha Vantage API key is set correctly
 
 2. **API errors**
-   - Verify your API keys are correct
-   - Check if you've exceeded API limits
-   - The app will use fallback analysis if APIs fail
+   - Verify your API keys are correct in `.env` file
+   - Check if you've exceeded API rate limits
+   - The app will use fallback methods when possible
 
-3. **Slow performance**
-   - First analysis may be slow due to data fetching
-   - Subsequent analyses will be faster due to caching
-   - Reduce forecast period for faster processing
+3. **Port already in use**
+   - Change the port in `app.py`: `app.run(port=5004)`
+   - Update `API_BASE_URL` in `script.js` to match
 
-4. **Installation issues**
-   - Ensure Python 3.8+ is installed
-   - Try upgrading pip: `pip install --upgrade pip`
-   - Install dependencies one by one if needed
+4. **Module not found errors**
+   - Ensure virtual environment is activated
+   - Reinstall dependencies: `pip install -r requirements.txt`
 
-### **Performance Tips**
-- Use shorter timeframes for faster analysis
-- Reduce forecast period for quicker results
-- Close other applications to free up memory
-- Use the caching system effectively
+5. **Sentiment analysis not working**
+   - Verify OpenAI API key is set correctly
+   - Check your OpenAI account has available credits
+   - News articles are fetched from yfinance (free, no API key needed)
 
-## Disclaimer
+## 📊 Features in Detail
 
-This application is for educational and informational purposes only. The analysis and predictions provided should not be considered as financial advice. Always conduct your own research and consult with a financial advisor before making investment decisions. Past performance does not guarantee future results, and all investments carry risk.
+### **Data Sources**
+- **Alpha Vantage**: Historical stock data and fundamental data
+- **yfinance**: News articles (free, no API key needed)
+- **OpenAI**: Sentiment analysis and LLM price predictions
 
-## Contributing
+### **ML Models**
+- **Random Forest Regressor**: For price predictions
+- **Prophet**: Time series forecasting
+- **LLM (GPT-4)**: Conservative price predictions with reasoning
+
+### **Technical Indicators**
+- RSI (Relative Strength Index)
+- MACD (Moving Average Convergence Divergence)
+- Bollinger Bands
+- Moving Averages (SMA, EMA)
+- OBV (On-Balance Volume)
+- And more...
+
+## ⚠️ Disclaimer
+
+This application is for **educational and informational purposes only**. The analysis and predictions provided should **not** be considered as financial advice. Always conduct your own research and consult with a financial advisor before making investment decisions. Past performance does not guarantee future results, and all investments carry risk.
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 🤝 Contributing
 
 Feel free to contribute to this project by:
 - Reporting bugs
@@ -205,15 +233,13 @@ Feel free to contribute to this project by:
 - Improving documentation
 - Optimizing performance
 
-## License
-
-This project is open source and available under the MIT License.
-
-## Support
+## 📧 Support
 
 For support or questions:
-- Check the troubleshooting section
+- Check the troubleshooting section above
 - Review the documentation
 - Open an issue on the repository
 
 ---
+
+**Built with ❤️ using Flask, Python, and AI**

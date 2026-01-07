@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockForecastX Pro: Advanced AI Stock Forecasting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        // Error handler to catch any JavaScript errors
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript Error:', e.error);
+            document.body.innerHTML = '<div style="padding: 20px; color: red; background: white; z-index: 9999;"><h1>JavaScript Error Detected</h1><p>' + e.error + '</p><p>Check the browser console for details.</p></div>';
+        });
+        
+        // Test if page loads
+        window.addEventListener('load', function() {
+            console.log('Page loaded successfully');
+            if (document.querySelector('.container')) {
+                console.log('Container found');
+            } else {
+                console.error('Container not found!');
+            }
+        });
+    </script>
+</head>
+<body>
+    <noscript>
+        <div style="padding: 20px; background: red; color: white;">
+            <h1>JavaScript is Required</h1>
+            <p>Please enable JavaScript to use this application.</p>
+        </div>
+    </noscript>
+    <div class="container">
+        <header>
+            <h1>StockForecastX Pro: Advanced AI Stock Forecasting</h1>
+            <p class="subtitle">Combining technical analysis, fundamental analysis, sentiment analysis, and AI-driven forecasting</p>
+        </header>
+
+        <div id="warningBanner" class="warning-banner">
+            <strong>Disclaimer:</strong> This application utilizes advanced AI and machine learning for stock analysis and forecasting. 
+            While it provides valuable insights based on historical data and various analytical methods, 
+            financial markets are inherently unpredictable. These predictions should be used as one of many tools 
+            in your investment research and should not be solely relied upon for financial decisions.
+            <button onclick="closeWarning()" class="close-btn">×</button>
+        </div>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Stock Analysis Settings</h3>
+                    <div class="form-group">
+                        <label for="ticker">Stock Ticker Symbol:</label>
+                        <input type="text" id="ticker" placeholder="AAPL" value="AAPL">
+                    </div>
+                    <div class="form-group">
+                        <label for="timeframe">Historical Data Timeframe:</label>
+                        <select id="timeframe">
+                            <option value="365" selected>1 Year</option>
+                            <option value="730">2 Years</option>
+                            <option value="1825">5 Years</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="forecastPeriod">Forecast Days: <span id="forecastValue">14 days</span></label>
+                        <input type="range" id="forecastPeriod" min="1" max="60" value="14">
+                    </div>
+                    <button onclick="analyzeStock()" class="btn-primary">Analyze Stock</button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Weather Settings</h3>
+                    <div class="form-group">
+                        <label for="weatherCity">Enter City for Weather Info:</label>
+                        <input type="text" id="weatherCity" placeholder="Denver" value="Denver">
+                        <button onclick="getWeather()" class="btn-secondary">Get Weather</button>
+                    </div>
+                    <div id="weatherInfo" class="weather-info"></div>
+                </div>
+
+            </aside>
+
+            <main class="content-area">
+                <div id="loadingIndicator" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing stock data...</p>
+                </div>
+
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+                <div id="results" style="display: none;">
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="showTab('dashboard')">Dashboard</button>
+                        <button class="tab-button" onclick="showTab('technical')">Technical Analysis</button>
+                        <button class="tab-button" onclick="showTab('fundamental')">Fundamental Analysis</button>
+                        <button class="tab-button" onclick="showTab('sentiment')">Sentiment Analysis</button>
+                        <button class="tab-button" onclick="showTab('ml')">ML Forecasts</button>
+                        <button class="tab-button" onclick="showTab('ai')">AI Insights</button>
+                    </div>
+
+                    <div id="dashboard" class="tab-content active">
+                        <div class="metrics-row">
+                            <div class="metric-card">
+                                <label>Current Price</label>
+                                <h2 id="currentPrice">$0.00</h2>
+                                <span id="currentPriceDelta" class="delta">0.00%</span>
+                            </div>
+                            <div class="metric-card">
+                                <label>Forecast Price</label>
+                                <h2 id="forecastPrice">$0.00</h2>
+                                <span id="forecastPriceDelta" class="delta">0.00%</span>
+                            </div>
+                        </div>
+                        <div class="metrics-row">
+                            <div class="metric-card">
+                                <div id="healthGauge"></div>
+                            </div>
+                            <div class="metric-card">
+                                <div id="sentimentGauge"></div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div id="priceChart"></div>
+                        </div>
+
+                        <div class="chart-container">
+                            <div id="volumeChart"></div>
+                        </div>
+
+                        <div class="section">
+                            <h3>AI Analysis</h3>
+                            <div id="aiAnalysis" class="analysis-text"></div>
+                        </div>
+
+                        <div class="section">
+                            <h3>Key Metrics</h3>
+                            <div id="keyMetrics" class="metrics-grid"></div>
+                        </div>
+
+                        <div class="section">
+                            <h3>Recent News</h3>
+                            <div id="newsItems" class="news-container"></div>
+                        </div>
+                    </div>
+
+                    <div id="technical" class="tab-content">
+                        <div class="section">
+                            <h3>Price with Technical Indicators</h3>
+                            <div id="technicalChart" class="chart-container"></div>
+                        </div>
+                        <div class="section">
+                            <h3>Technical Oscillators</h3>
+                            <div id="oscillatorsChart" class="chart-container"></div>
+                        </div>
+                        <div class="section">
+                            <h3>Technical Signals</h3>
+                            <div id="technicalSignals"></div>
+                        </div>
+                    </div>
+
+                    <div id="fundamental" class="tab-content">
+                        <div id="fundamentalContent"></div>
+                    </div>
+
+                    <div id="sentiment" class="tab-content">
+                        <div id="sentimentContent"></div>
+                    </div>
+
+                    <div id="ml" class="tab-content">
+                        <div id="mlContent"></div>
+                    </div>
+
+                    <div id="ai" class="tab-content">
+                        <div id="aiContent"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
