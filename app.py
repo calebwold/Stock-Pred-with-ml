@@ -1521,5 +1521,7 @@ if __name__ == '__main__':
     # Get port from environment variable (for Railway, Render, Heroku) or default to 5004
     port = int(os.getenv('PORT', 5004))
     # Run on all interfaces (0.0.0.0) for production deployment
-    app.run(debug=True, host='0.0.0.0', port=port)
+    # Disable debug mode in production (set DEBUG=False in environment variables)
+    debug_mode = os.getenv('DEBUG', 'False').lower() == 'true'
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
 
