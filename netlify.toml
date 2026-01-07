@@ -5,6 +5,12 @@
   # Netlify will serve the static files (index.html, styles.css, script.js)
   # No build command needed since these are already static files
   publish = "."
+  # Explicitly disable Python to prevent automatic detection
+  command = "echo 'Static site - no build needed'"
+  
+# Explicitly tell Netlify not to install Python
+[build.environment]
+  PYTHON_VERSION = ""
 
 [[redirects]]
   # Redirect all routes to index.html for SPA behavior
