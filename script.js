@@ -1,12 +1,19 @@
 // API Configuration - automatically detects environment
 // For local development: uses localhost
-// For production: uses environment variable or relative URL
+// For production: uses the backend URL (update after deploying backend)
 const API_BASE_URL = (() => {
     // Check if we're in production (hosted on Netlify or similar)
     if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-        // Production: Use environment variable or default to relative path
-        // You can set this in Netlify's environment variables or update it manually
-        const prodUrl = window.API_BASE_URL || 'https://your-flask-backend.railway.app/api';
+        // Production: Replace 'YOUR-BACKEND-URL' with your actual Railway/Render backend URL
+        // Example: 'https://stockforecastx-backend.railway.app/api'
+        // You can also set this via Netlify environment variable: API_BASE_URL
+        const prodUrl = window.API_BASE_URL || 'https://YOUR-BACKEND-URL.railway.app/api';
+        
+        // Show helpful error if placeholder URL is still being used
+        if (prodUrl.includes('YOUR-BACKEND-URL')) {
+            console.error('⚠️ Backend URL not configured! Please update script.js with your actual backend URL.');
+        }
+        
         return prodUrl;
     } else {
         // Development: Use localhost
@@ -100,7 +107,17 @@ async function analyzeStock() {
             showError(data.error || 'Failed to analyze stock');
         }
     } catch (error) {
-        showError(`Error: ${error.message}. Make sure the backend server is running on port 5004.`);
+        // Check if we're in production and backend URL is not configured
+        const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+        const backendNotConfigured = API_BASE_URL.includes('YOUR-BACKEND-URL');
+        
+        if (isProduction && backendNotConfigured) {
+            showError(`Backend not configured! Please deploy your Flask backend to Railway/Render and update the API_BASE_URL in script.js. Current URL: ${API_BASE_URL}`);
+        } else if (isProduction) {
+            showError(`Cannot connect to backend server at ${API_BASE_URL}. Please ensure your Flask backend is deployed and running. Error: ${error.message}`);
+        } else {
+            showError(`Error: ${error.message}. Make sure the backend server is running on port 5004.`);
+        }
     } finally {
         document.getElementById('loadingIndicator').style.display = 'none';
     }
