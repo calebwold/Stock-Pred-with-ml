@@ -1,0 +1,18 @@
+# Netlify Configuration for StockForecastX Pro
+# This file configures Netlify to serve the static frontend files
+
+[build]
+  # Netlify will serve the static files (index.html, styles.css, script.js)
+  # No build command needed since these are already static files
+  publish = "."
+
+[[redirects]]
+  # Redirect all routes to index.html for SPA behavior
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables can be set in Netlify dashboard:
+# Settings > Environment Variables
+# Add: API_BASE_URL = https://your-flask-backend-url.com/api
+

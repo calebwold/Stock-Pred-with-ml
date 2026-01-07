@@ -21,7 +21,15 @@ from typing import Optional, Dict, Any
 from openai import OpenAI
 
 app = Flask(__name__)
-CORS(app)
+# CORS configuration - allows requests from any origin (for production)
+# In production, you can restrict this to your Netlify domain for better security
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",  # Change to your Netlify domain in production: "https://your-site.netlify.app"
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 def clean_for_json(obj):
     """Recursively clean data for JSON serialization, replacing NaN with None"""
@@ -1510,5 +1518,8 @@ def serve_static(path):
         return send_from_directory(os.path.dirname(os.path.abspath(__file__)), path)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5004)
+    # Get port from environment variable (for Railway, Render, Heroku) or default to 5004
+    port = int(os.getenv('PORT', 5004))
+    # Run on all interfaces (0.0.0.0) for production deployment
+    app.run(debug=True, host='0.0.0.0', port=port)
 

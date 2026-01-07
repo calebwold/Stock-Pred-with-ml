@@ -1,4 +1,18 @@
-const API_BASE_URL = 'http://localhost:5004/api';
+// API Configuration - automatically detects environment
+// For local development: uses localhost
+// For production: uses environment variable or relative URL
+const API_BASE_URL = (() => {
+    // Check if we're in production (hosted on Netlify or similar)
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        // Production: Use environment variable or default to relative path
+        // You can set this in Netlify's environment variables or update it manually
+        const prodUrl = window.API_BASE_URL || 'https://your-flask-backend.railway.app/api';
+        return prodUrl;
+    } else {
+        // Development: Use localhost
+        return 'http://localhost:5004/api';
+    }
+})();
 
 let currentData = null;
 
