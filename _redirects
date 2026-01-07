@@ -1,0 +1,3 @@
+# Netlify redirects file (alternative to netlify.toml)
+# Redirect all routes to index.html for SPA behavior
+/*    /index.html   200

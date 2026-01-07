@@ -1,0 +1,28 @@
+# Tell Netlify to ignore these files during build
+# This prevents Netlify from detecting Python and trying to install dependencies
+
+# Python files (backend - deployed separately)
+app.py
+STOCK_PRED.py
+requirements.txt
+*.py
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+myenv/
+env/
+.venv/
+
+# Python-related
+.python-version
+runtime.txt
+Procfile
+
+# Other files not needed for frontend
+README.md
+.git/
+.gitignore
