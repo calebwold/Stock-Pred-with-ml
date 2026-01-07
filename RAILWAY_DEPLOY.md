@@ -25,7 +25,8 @@ Your frontend is live on Netlify, but you need to deploy the Flask backend separ
 
 4. **Configure Service**:
    - **Start Command**: `python3 app.py` (or Railway will auto-detect from Procfile)
-   - Railway will automatically use `runtime.txt` for Python version
+   - Railway will automatically detect Python version from your `requirements.txt` and `Procfile`
+   - Railway defaults to Python 3.11, which works perfectly for this app
 
 5. **Deploy** - Railway will build and deploy automatically
 
