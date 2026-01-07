@@ -4,10 +4,9 @@
 const API_BASE_URL = (() => {
     // Check if we're in production (hosted on Netlify or similar)
     if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-        // Production: Replace 'YOUR-BACKEND-URL' with your actual Render backend URL
-        // Example: 'https://stockforecastx-backend.onrender.com/api'
-        // You can also set this via Netlify environment variable: API_BASE_URL
-        const prodUrl = window.API_BASE_URL || 'https://YOUR-BACKEND-URL.onrender.com/api';
+        // Production: Backend deployed on Render
+        // You can override this via Netlify environment variable: API_BASE_URL
+        const prodUrl = window.API_BASE_URL || 'https://stock-pred-with-ml.onrender.com/api';
         
         // Show helpful error if placeholder URL is still being used
         if (prodUrl.includes('YOUR-BACKEND-URL')) {
